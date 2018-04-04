@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+   db:
+     image: mysql:5.7
+     container_name: db_server
+     volumes:
+       - dbdata:/var/lib/mysql
+     restart: always
+     ports:
+       - "3306:3306"
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: flask
+       MYSQL_USER: flask
+       MYSQL_PASSWORD: flask
+   web:
+     container_name: web_server
+     image: myimage
+     depends_on:
+       - db
+     ports:
+       - "80:80"
+     links:
+       - db
+
+volumes:
+    dbdata:
